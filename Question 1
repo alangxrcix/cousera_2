@@ -1,0 +1,8 @@
+import yfinance as yf
+
+ticker_symbol = "TSLA"
+
+tesla_data = yf.download(ticker_symbol, period="1y", interval="1d")
+
+first_five_rows = tesla_data.head(5)
+print(first_five_rows)
