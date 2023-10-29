@@ -1,0 +1,20 @@
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+ticker_symbol = "GME"
+
+gme_data = yf.download(ticker_symbol, period="1y", interval="1d")
+
+def make_graph(data, title):
+    plt.figure(figsize=(12, 6))
+    plt.plot(data.index, data['Close'], label='GameStop Close Price', color='r')
+    plt.title(title)
+    plt.xlabel('Date')
+    plt.ylabel('Price (USD)')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+graph_title = "GameStop Stock Data (1 Year)"
+
+make_graph(gme_data, graph_title)
