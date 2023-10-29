@@ -1,0 +1,16 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://www.macrotrends.net/stocks/charts/GME/gamestop/revenue"
+
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, "html.parser")
+
+revenue_table = soup.find("table", {"class": "historical_data_table"})
+
+gme_revenue = pd.read_html(str(revenue_table))[0]
+
+last_five_rows = gme_revenue.tail(5)
+print(last_five_rows)
