@@ -2,15 +2,18 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://www.macrotrends.net/stocks/charts/GME/gamestop/revenue"
+url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
 
 response = requests.get(url)
 
-soup = BeautifulSoup(response.text, "html.parser")
+if response.status_code == 200:
+    soup = BeautifulSoup(response.text, "html.parser")
 
-revenue_table = soup.find("table", {"class": "historical_data_table"})
+    revenue_table = soup.find("table", {"id": "table"}).find("tbody")
 
-gme_revenue = pd.read_html(str(revenue_table))[0]
+    tesla_revenue = pd.read_html(str(revenue_table))[0]
 
-last_five_rows = gme_revenue.tail(5)
-print(last_five_rows)
+    last_five_rows = tesla_revenue.tail(5)
+    print(last_five_rows)
+else:
+    print("Failed to retrieve data. Check the URL or your internet connection.")
